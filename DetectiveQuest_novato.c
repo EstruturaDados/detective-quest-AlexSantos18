@@ -30,6 +30,7 @@ int main()
 {
     int resp;
 
+    // inicializacao da arvore mansao
     struct No* raiz = criarNo("Hall de Entrada");
     raiz->esquerda = criarNo("Sala de Estar");
     raiz->direita = criarNo("Biblioteca");
@@ -56,7 +57,7 @@ int main()
         case 1:
         { 
             printf("\n[AVISO] Voce esta percorrendo o lado Esquerdo da Mansao\n");
-            emOrdem(raiz->esquerda);
+            emOrdem(raiz->esquerda); // percore a arvore em ordem somente do lado esquerdo
             printf("\n");    
             break;
 
@@ -64,7 +65,7 @@ int main()
         case 2:
         {
             printf("\n[AVISO] Voce esta percorrendo o lado Direito da Mansao\n");
-            emOrdem(raiz->direita);
+            emOrdem(raiz->direita); // percore a arvore em ordem somente do lado direito
             printf("\n");
             break;
         }
@@ -97,7 +98,8 @@ struct No* criarNo(char* valor){
     return novo;
     
 }
-
+/// @brief percorer a arvore na em pre ordem 
+/// @param raiz 
 void preOrdem(struct No* raiz){
     if (raiz != NULL){
         printf("Comodo: %s \n", raiz->valor);
@@ -106,6 +108,8 @@ void preOrdem(struct No* raiz){
     }
 }
 
+/// @brief percorer a arvore em ordem
+/// @param raiz 
 void emOrdem(struct No* raiz){
     if (raiz != NULL){
         emOrdem(raiz->esquerda);
@@ -114,6 +118,8 @@ void emOrdem(struct No* raiz){
     }
 }
 
+/// @brief percorer a arvore em pos ordem
+/// @param raiz 
 void posOrdem(struct No* raiz){
     if (raiz != NULL){
         posOrdem(raiz->esquerda);
@@ -122,6 +128,8 @@ void posOrdem(struct No* raiz){
     }
 }
 
+/// @brief liberar a memoria 
+/// @param raiz 
 void liberar(struct No* raiz){
     if (raiz != NULL){
         liberar(raiz->esquerda);
