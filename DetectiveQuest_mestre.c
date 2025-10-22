@@ -28,18 +28,22 @@ typedef struct NoIndice {
 NoIndice* tabela_hash[TAM_TABELA];
 
 // Prototipos 
+
+// Arvore Binaria
 struct No* criarNo(const char* valor, const char* pista);
 void emOrdem(struct No* raiz);
 void liberar(struct No* raiz);
 bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie);
 void limparBuffer();
 
+// Arvore Trie
 struct NoTrie* criarNoTrie();
 void inserirTrie(struct NoTrie* raizTrie, const char* palavra);
 bool buscarTrie(struct NoTrie* raizTrie, const char* palavra);
 void listarPalavras(struct NoTrie* no, char* buffer, int nivel);
 void normalizar(const char* entrada, char* saida);
 
+// Tabela Hash
 int funcaoHash(const char* chave);
 void inserirHash(const char* pista, const char* suspeito);
 NoIndice* buscarHash(const char* pista);
@@ -78,12 +82,12 @@ int main() {
     }
 
     // Criar um filho à esquerda
-    raiz->esquerda = criarNo("Cozinha", "forno quente");
+    raiz->esquerda = criarNo("Cozinha", "Forno quente");
     raiz->esquerda->esquerda = criarNo("Quarto", "Retrato Qubrado");
     raiz->esquerda->direita = criarNo("Banheiro", "Sangue");
 
     // Criar um filho a Direita
-    raiz->direita = criarNo("Biblioteca", "Livro sumido");
+    raiz->direita = criarNo("Biblioteca", "Livro rasgado");
     raiz->direita->esquerda = criarNo("Despensa", "Gaveta Aberta");
     raiz->direita->direita = criarNo("Cozinha", "Faca Sumiu");
 
@@ -111,7 +115,9 @@ int main() {
 
                 // Reinicia a tabela hash para evitar duplicatas
                 liberarTabelaHash();
-                for (int i = 0; i < TAM_TABELA; i++) tabela_hash[i] = NULL;
+                for (int i = 0; i < TAM_TABELA; i++){ 
+                    tabela_hash[i] = NULL;
+                }
 
                 char buf[100];
                 inserirTodasPistasNaHash(raizTrie, buf, 0);
@@ -121,7 +127,9 @@ int main() {
             case 3: {
                 char pista[50];
                 printf("Digite a pista (ex: sangue, faca): ");
-                if (fgets(pista, sizeof(pista), stdin) == NULL) break;
+                if (fgets(pista, sizeof(pista), stdin) == NULL){ 
+                    break;
+                }
                 pista[strcspn(pista, "\n")] = 0;
 
                 char pista_normal[50];
@@ -178,9 +186,13 @@ struct No* criarNo(const char* valor, const char* pista) {
 /// @param raizTrie 
 /// @return 
 bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie) {
-    if (raiz == NULL) return true;
+    if (raiz == NULL) { 
+        return true;
+    }
 
-    if (!explorarSalasComPistas(raiz->esquerda, raizTrie)) return false;
+    if (!explorarSalasComPistas(raiz->esquerda, raizTrie)) { 
+        return false;
+    }
 
     printf("Comodo: %s, Pista: %s\n", raiz->valor, raiz->pista);
 
@@ -189,14 +201,14 @@ bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie) {
     strncpy(copia, raiz->pista, 99);
     copia[99] = '\0';
 
-    char* token = strtok(copia, " ,.!?:;\"\'\n\t");
-    while (token != NULL) {
+    char* indice = strtok(copia, " ,.!?:;\"\'\n\t");
+    while (indice != NULL) {
         char palavra_norm[50];
-        normalizar(token, palavra_norm);
+        normalizar(indice, palavra_norm);
         if (strlen(palavra_norm) > 0) {
             inserirTrie(raizTrie, palavra_norm);
         }
-        token = strtok(NULL, " ,.!?:;\"\'\n\t");
+        indice = strtok(NULL, " ,.!?:;\"\'\n\t");
     }
 
     printf("[AVISO] Deseja ir para o proximo comodo (s/n): ");
@@ -204,7 +216,9 @@ bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie) {
     scanf(" %c", &resp);
     limparBuffer();
 
-    if (resp == 'n' || resp == 'N') return false;
+    if (resp == 'n' || resp == 'N') {
+        return false;
+    }
 
     return explorarSalasComPistas(raiz->direita, raizTrie);
 }
@@ -241,11 +255,11 @@ struct NoTrie* criarNoTrie() {
 void inserirTrie(struct NoTrie* raizTrie, const char* palavra) {
     struct NoTrie* atual = raizTrie;
     for (int i = 0; palavra[i] != '\0'; i++) {
-        int idx = palavra[i] - 'a';
-        if (atual->filhos[idx] == NULL) {
-            atual->filhos[idx] = criarNoTrie();
+        int id = palavra[i] - 'a';
+        if (atual->filhos[id] == NULL) {
+            atual->filhos[id] = criarNoTrie();
         }
-        atual = atual->filhos[idx];
+        atual = atual->filhos[id];
     }
     atual->FimDePalabra = true;
 }
@@ -298,20 +312,20 @@ int funcaoHash(const char* chave) {
 /// @param pista 
 /// @param suspeito 
 void inserirHash(const char* pista, const char* suspeito) {
-    int idx = funcaoHash(pista);
+    int id = funcaoHash(pista);
     NoIndice* novo = malloc(sizeof(NoIndice));
     strcpy(novo->pista, pista);
     strcpy(novo->suspeito, suspeito);
-    novo->proximo = tabela_hash[idx];
-    tabela_hash[idx] = novo;
+    novo->proximo = tabela_hash[id];
+    tabela_hash[id] = novo;
 }
 
 /// @brief busca a pista 
 /// @param pista 
 /// @return 
 NoIndice* buscarHash(const char* pista) {
-    int idx = funcaoHash(pista);
-    NoIndice* atual = tabela_hash[idx];
+    int id = funcaoHash(pista);
+    NoIndice* atual = tabela_hash[id];
     while (atual) {
         if (strcmp(atual->pista, pista) == 0) {
             return atual;
@@ -326,7 +340,9 @@ NoIndice* buscarHash(const char* pista) {
 /// @param buffer 
 /// @param nivel 
 void inserirTodasPistasNaHash(struct NoTrie* no, char* buffer, int nivel) {
-    if (!no) return;
+    if (!no) {
+        return;
+    }
 
     if (no->FimDePalabra) {
         buffer[nivel] = '\0';
