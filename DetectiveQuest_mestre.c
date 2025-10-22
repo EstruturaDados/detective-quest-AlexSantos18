@@ -282,7 +282,9 @@ void normalizar(const char* entrada, char* saida) {
     saida[j] = '\0'; 
 }
 
-
+/// @brief funcao hash
+/// @param chave 
+/// @return 
 int funcaoHash(const char* chave) {
     int soma = 0;
     for (int i = 0; chave[i] != '\0'; i++) {
@@ -291,6 +293,9 @@ int funcaoHash(const char* chave) {
     return soma % TAM_TABELA;
 }
 
+/// @brief inseri a pista no hash
+/// @param pista 
+/// @param suspeito 
 void inserirHash(const char* pista, const char* suspeito) {
     int idx = funcaoHash(pista);
     NoIndice* novo = malloc(sizeof(NoIndice));
@@ -300,6 +305,9 @@ void inserirHash(const char* pista, const char* suspeito) {
     tabela_hash[idx] = novo;
 }
 
+/// @brief busca a pista 
+/// @param pista 
+/// @return 
 NoIndice* buscarHash(const char* pista) {
     int idx = funcaoHash(pista);
     NoIndice* atual = tabela_hash[idx];
