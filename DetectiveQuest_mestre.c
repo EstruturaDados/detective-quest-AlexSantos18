@@ -45,12 +45,12 @@ void inserirHash(const char* pista, const char* suspeito);
 NoIndice* buscarHash(const char* pista);
 void inserirTodasPistasNaHash(struct NoTrie* no, char* buffer, int nivel);
 
-// Libera memória da tabela hash
+// Liberar memoria da tabela hash
 void liberarTabelaHash();
 
-// Mapeamento: pista -> suspeito
+// inserir pista no suspeito
 const char* obterSuspeito(const char* pista) {
-    // Adicione mais regras conforme necessário
+    
     if (strcmp(pista, "faca") == 0) return "Carlos";
     if (strcmp(pista, "sangue") == 0) return "Alex";
     if (strcmp(pista, "gaveta") == 0) return "Alice";
