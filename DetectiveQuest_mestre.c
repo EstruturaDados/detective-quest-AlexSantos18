@@ -134,7 +134,8 @@ int main() {
 
                 NoIndice* resultado = buscarHash(pista_normal);
                 if (resultado) {
-                    printf("Suspeito associado à pista '%s': %s\n", pista_normal, resultado->suspeito);
+                    printf("\n");
+                    printf("Suspeito associado a pista '%s': %s\n", pista_normal, resultado->suspeito);
                 } else {
                     printf("Nenhum suspeito encontrado para a pista '%s'.\n", pista_normal);
                 }
