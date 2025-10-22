@@ -320,6 +320,10 @@ NoIndice* buscarHash(const char* pista) {
     return NULL;
 }
 
+/// @brief insere todas as pistas na hash
+/// @param no 
+/// @param buffer 
+/// @param nivel 
 void inserirTodasPistasNaHash(struct NoTrie* no, char* buffer, int nivel) {
     if (!no) return;
 
@@ -337,6 +341,7 @@ void inserirTodasPistasNaHash(struct NoTrie* no, char* buffer, int nivel) {
     }
 }
 
+/// @brief libera a memoria hash
 void liberarTabelaHash() {
     for (int i = 0; i < TAM_TABELA; i++) {
         NoIndice* atual = tabela_hash[i];
