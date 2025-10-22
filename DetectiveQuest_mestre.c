@@ -223,6 +223,7 @@ void limparBuffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
+/// @brief Cria um no Trie
 struct NoTrie* criarNoTrie() {
     struct NoTrie* novo = malloc(sizeof(struct NoTrie));
     if (!novo) return NULL;
@@ -233,6 +234,9 @@ struct NoTrie* criarNoTrie() {
     return novo;
 }
 
+/// @brief Inseri a pista na arvore trie
+/// @param raizTrie 
+/// @param palavra 
 void inserirTrie(struct NoTrie* raizTrie, const char* palavra) {
     struct NoTrie* atual = raizTrie;
     for (int i = 0; palavra[i] != '\0'; i++) {
@@ -245,6 +249,10 @@ void inserirTrie(struct NoTrie* raizTrie, const char* palavra) {
     atual->FimDePalabra = true;
 }
 
+/// @brief Lista a palavras
+/// @param no 
+/// @param buffer 
+/// @param nivel 
 void listarPalavras(struct NoTrie* no, char* buffer, int nivel) {
     if (no && no->FimDePalabra) {
         buffer[nivel] = '\0';
@@ -259,6 +267,9 @@ void listarPalavras(struct NoTrie* no, char* buffer, int nivel) {
     }
 }
 
+/// @brief normaliza a frase
+/// @param entrada 
+/// @param saida 
 void normalizar(const char* entrada, char* saida) {
     int j = 0;
     for (int i = 0; entrada[i] != '\0'; i++) {
@@ -268,8 +279,9 @@ void normalizar(const char* entrada, char* saida) {
             saida[j++] = c;
         }
     }
-    saida[j] = '\0'; // ← SÓ AQUI!
+    saida[j] = '\0'; 
 }
+
 
 int funcaoHash(const char* chave) {
     int soma = 0;
