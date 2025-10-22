@@ -55,13 +55,13 @@ int main()
     }
 
     // Criar um filho à esquerda
-    raiz->esquerda = criarNo("Cozinha", "O forno está levemente quente");
-    raiz->esquerda->esquerda = criarNo("Quarto", "O Guarda-Roupa esta Aberto");
-    raiz->esquerda->direita = criarNo("Banheiro", "Sangue no Chao");
+    raiz->esquerda = criarNo("Cozinha", "Forno esta quente");
+    raiz->esquerda->esquerda = criarNo("Quarto", "Retrato quebrado");
+    raiz->esquerda->direita = criarNo("Banheiro", "Sangue no chao");
     // Criar um filho a Direita
-    raiz->direita = criarNo("Biblioteca", "O Livro esta Caido");
-    raiz->direita->esquerda = criarNo("Despensa", "A Gaveta esta Aberta");
-    raiz->direita->direita = criarNo("Cozinha", "A Faca Sumiu");
+    raiz->direita = criarNo("Biblioteca", "Livro esta Caido");
+    raiz->direita->esquerda = criarNo("Despensa", "Gaveta esta aberta");
+    raiz->direita->direita = criarNo("Cozinha", "Faca sumiu");
 
     do
     {   
