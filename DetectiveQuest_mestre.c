@@ -81,6 +81,7 @@ int main() {
     raiz->esquerda = criarNo("Cozinha", "forno quente");
     raiz->esquerda->esquerda = criarNo("Quarto", "Retrato Qubrado");
     raiz->esquerda->direita = criarNo("Banheiro", "Sangue");
+
     // Criar um filho a Direita
     raiz->direita = criarNo("Biblioteca", "Livro sumido");
     raiz->direita->esquerda = criarNo("Despensa", "Gaveta Aberta");
@@ -89,7 +90,7 @@ int main() {
     do {   
         printf("\n====MENU DA MANSAO====\n");
         printf("1 - Navegar pela Mansao\n");
-        printf("2 - Listar Pistas Encontradas e Associar Suspeitos\n");
+        printf("2 - Listar Pistas Encontradas\n");
         printf("3 - Buscar Suspeito por Pista\n");
         printf("0 - Sair\n");
         printf("Escolha uma opcao: ");
@@ -154,6 +155,8 @@ int main() {
 
 // === Implementações ===
 
+
+/// @brief Cria um No 
 struct No* criarNo(const char* valor, const char* pista) {
     struct No* novo = (struct No*) malloc(sizeof(struct No));
     if (novo == NULL) {
@@ -169,6 +172,10 @@ struct No* criarNo(const char* valor, const char* pista) {
     return novo;
 }
 
+/// @brief percore a arvore pelos comodos 
+/// @param raiz 
+/// @param raizTrie 
+/// @return 
 bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie) {
     if (raiz == NULL) return true;
 
@@ -201,6 +208,8 @@ bool explorarSalasComPistas(struct No* raiz, struct NoTrie* raizTrie) {
     return explorarSalasComPistas(raiz->direita, raizTrie);
 }
 
+/// @brief libera a memoria 
+/// @param raiz 
 void liberar(struct No* raiz) {
     if (raiz != NULL) {
         liberar(raiz->esquerda);
@@ -208,7 +217,7 @@ void liberar(struct No* raiz) {
         free(raiz);
     }
 }
-
+/// @brief limpa o buffer
 void limparBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
